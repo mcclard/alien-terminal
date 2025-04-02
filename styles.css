@@ -37,10 +37,40 @@ body {
     border-bottom: 1px solid #33ff33;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .terminal-title {
     font-size: 1.2rem;
+}
+
+.terminal-options {
+    margin-right: 20px;
+}
+
+.sound-toggle {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.sound-toggle input {
+    margin-right: 5px;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #33ff33;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+}
+
+.sound-toggle input:checked::after {
+    content: "✓";
+    color: #33ff33;
+    position: absolute;
+    top: -2px;
+    left: 2px;
 }
 
 .status-indicator {
