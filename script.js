@@ -67,11 +67,60 @@ document.addEventListener('DOMContentLoaded', function() {
         'logout': function() {
             return [
                 'DISCONNECTING FROM TERMINAL...',
-                'THANK YOU FOR USING DHI COMPUTER SERVICES',
+                'THANK YOU FOR USING WEYLAND-YUTANI SERVICES',
                 'CONNECTION TERMINATED'
             ];
         }
     };
+    
+    // Startup sequence
+    const startupLines = [
+        "INITIALIZING SYSTEM...",
+        "ESTABLISHING CONNECTION...",
+        "WELCOME TO THE DEEP SPACE MISSION DATABASE",
+        "VERSION 2.1.79"
+    ];
+    
+    // Empty the output first
+    outputElement.innerHTML = '';
+    
+    // Display startup messages with scrolling effect
+    displayStartupSequence(0);
+    
+    function displayStartupSequence(lineIndex) {
+        if (lineIndex < startupLines.length) {
+            const line = startupLines[lineIndex];
+            const element = document.createElement('p');
+            element.textContent = '> ';
+            outputElement.appendChild(element);
+            
+            let charIndex = 0;
+            const timer = setInterval(() => {
+                if (charIndex < line.length) {
+                    element.textContent = '> ' + line.substring(0, charIndex + 1);
+                    charIndex++;
+                    
+                    // Random typing sound for system responses
+                    if (soundToggle.checked && Math.random() > 0.7) {
+                        playKeySound();
+                    }
+                    
+                    outputElement.scrollTop = outputElement.scrollHeight;
+                } else {
+                    clearInterval(timer);
+                    setTimeout(() => {
+                        displayStartupSequence(lineIndex + 1);
+                    }, 500); // Wait before showing next line
+                }
+            }, 40); // Speed of typing
+        } else {
+            // After startup sequence, display help menu
+            setTimeout(() => {
+                const helpResponse = commands['help']();
+                typeResponse(helpResponse, 0);
+            }, 500);
+        }
+    }
     
     // Handle input submission
     inputElement.addEventListener('keydown', function(e) {
@@ -124,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     charIndex++;
                     
                     // Random typing sound for system responses
-                    if (Math.random() > 0.7) {
+                    if (soundToggle.checked && Math.random() > 0.7) {
                         playKeySound();
                     }
                     
