@@ -3,7 +3,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const inputElement = document.getElementById('input');
     const soundToggle = document.getElementById('soundToggle');
     
-    // Function to create and play a new sound instance
+    // Startup sound for when toggle is checked
+    const startupSound = new Audio('sounds/console powering on.mp3');
+    startupSound.volume = 0.3;
+    
+    // Function to create and play a new sound instance for typing
     function playKeySound() {
         if (soundToggle.checked) {
             // Create a new audio instance each time for overlapping sounds
@@ -12,6 +16,14 @@ document.addEventListener('DOMContentLoaded', function() {
             keySound.play().catch(e => {});
         }
     }
+    
+    // Listen for changes to the sound toggle
+    soundToggle.addEventListener('change', function() {
+        if (this.checked) {
+            // Play startup sound when sounds are enabled
+            startupSound.play().catch(e => {});
+        }
+    });
     
     // Commands database
     const commands = {
