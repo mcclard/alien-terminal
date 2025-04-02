@@ -3,15 +3,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const inputElement = document.getElementById('input');
     const soundToggle = document.getElementById('soundToggle');
     
-    // Add typing sound effect
-    const typeSound = new Audio('type.mp3'); // You'll need a typing sound file
-    typeSound.volume = 0.2;
-    
-    // Function to play sound if enabled
-    function playTypeSound() {
+    // Function to create and play a new sound instance
+    function playKeySound() {
         if (soundToggle.checked) {
-            typeSound.currentTime = 0;
-            typeSound.play().catch(e => {});
+            // Create a new audio instance each time for overlapping sounds
+            const keySound = new Audio('sounds/electronic input, quick.mp3');
+            keySound.volume = 0.2;
+            keySound.play().catch(e => {});
         }
     }
     
@@ -65,6 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Handle input submission
     inputElement.addEventListener('keydown', function(e) {
+        // Play sound for every keystroke
+        playKeySound();
+        
         if (e.key === 'Enter') {
             const input = inputElement.value.trim().toUpperCase();
             
@@ -95,9 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Scroll to the bottom
             outputElement.scrollTop = outputElement.scrollHeight;
-        } else {
-            // Play typing sound if enabled
-            playTypeSound();
         }
     });
     
@@ -113,9 +111,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     element.textContent += line.charAt(charIndex);
                     charIndex++;
                     
-                    // Random typing sound if enabled
+                    // Random typing sound for system responses
                     if (Math.random() > 0.7) {
-                        playTypeSound();
+                        playKeySound();
                     }
                     
                     outputElement.scrollTop = outputElement.scrollHeight;
