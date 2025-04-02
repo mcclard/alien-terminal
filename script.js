@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
         'logout': function() {
             return [
                 'DISCONNECTING FROM TERMINAL...',
-                'THANK YOU FOR USING WEYLAND-YUTANI SERVICES',
+                'THANK YOU FOR USING DHI COMPUTER SERVICES',
                 'CONNECTION TERMINATED'
             ];
         }
