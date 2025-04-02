@@ -1,10 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
     const outputElement = document.getElementById('output');
     const inputElement = document.getElementById('input');
+    const soundToggle = document.getElementById('soundToggle');
     
     // Add typing sound effect
     const typeSound = new Audio('type.mp3'); // You'll need a typing sound file
     typeSound.volume = 0.2;
+    
+    // Function to play sound if enabled
+    function playTypeSound() {
+        if (soundToggle.checked) {
+            typeSound.currentTime = 0;
+            typeSound.play().catch(e => {});
+        }
+    }
     
     // Commands database
     const commands = {
@@ -31,8 +40,10 @@ document.addEventListener('DOMContentLoaded', function() {
         'reports': function() {
             return [
                 'ACCESSING REPORT DATABASE...',
-                'SECURITY CLEARANCE REQUIRED',
-                'ENTER AUTHENTICATION CODE:'
+                'REPORT DATABASE ACCESSED. DISPLAYING RECENT REPORTS:',
+                '- SALVAGE REPORT #42A: Derelict mining vessel "Nostromos"',
+                '- SPECIMEN ANALYSIS #17: Unknown biological organism',
+                '- MAINTENANCE LOG #113: Atmospheric processor malfunction'
             ];
         },
         'submit': function() {
@@ -85,9 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Scroll to the bottom
             outputElement.scrollTop = outputElement.scrollHeight;
         } else {
-            // Play typing sound for each keypress
-            typeSound.currentTime = 0;
-            typeSound.play().catch(e => {});
+            // Play typing sound if enabled
+            playTypeSound();
         }
     });
     
@@ -103,10 +113,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     element.textContent += line.charAt(charIndex);
                     charIndex++;
                     
-                    // Random typing sound
+                    // Random typing sound if enabled
                     if (Math.random() > 0.7) {
-                        typeSound.currentTime = 0;
-                        typeSound.play().catch(e => {});
+                        playTypeSound();
                     }
                     
                     outputElement.scrollTop = outputElement.scrollHeight;
